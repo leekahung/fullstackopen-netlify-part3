@@ -41,7 +41,7 @@ app.use(cors());
 
 // setting up middleware
 morgan.token("body", (request) => JSON.stringify(request.body));
-middlewareLog = ":method :url :status :res[content-length] - ms :body";
+const middlewareLog = ":method :url :status :res[content-length] - ms :body";
 
 app.use(express.json());
 app.use(morgan(middlewareLog));

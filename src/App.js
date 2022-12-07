@@ -33,10 +33,10 @@ const App = () => {
   const handleAddNote = (event) => {
     event.preventDefault();
     const noteObject = {
+      id: notes.length + 1,
       content: newNote,
       date: new Date().toISOString(),
       important: Boolean(noteImportance),
-      id: notes.length + 1,
     };
 
     noteServices.create(noteObject).then((newNoteObject) => {
