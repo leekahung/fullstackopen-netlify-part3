@@ -1,1 +1,1 @@
-# fullstackopen-netlify-part3
+# fullstackopen-part3
