@@ -18,8 +18,6 @@ const App = () => {
     });
   }, []);
 
-  console.log(notes);
-
   const notesToShow = showAll ? notes : notes.filter((n) => n.important);
 
   const handleShowAll = () => {
