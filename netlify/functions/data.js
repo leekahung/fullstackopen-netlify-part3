@@ -75,8 +75,7 @@ app.put("/api/data/:id", (request, response) => {
 });
 
 const unknownEndpoint = (request, response) => {
-  /* response.status(404).send({ error: "unknown endpoint" }); */
-  response.send(notes);
+  response.status(404).send({ error: "unknown endpoint" });
 };
 
 app.use(unknownEndpoint);
