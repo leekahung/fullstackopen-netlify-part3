@@ -1,7 +1,7 @@
 const express = require("express");
 const serverless = require("serverless-http");
 const cors = require("cors");
-/* const morgan = require("morgan"); */
+const morgan = require("morgan");
 
 let notes = [
   {
@@ -40,9 +40,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* morgan.token("body", (request) => JSON.stringify(request.body));
+morgan.token("body", (request) => JSON.stringify(request.body));
 const middlewareLog = ":method :url :status :res[content-length] - ms :body";
-app.use(morgan(middlewareLog)); */
+app.use(morgan(middlewareLog));
 
 app.get("/api/data", (request, response) => {
   response.json(notes);
