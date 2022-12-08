@@ -1,0 +1,12 @@
+POST http://localhost:8888/api/data
+Content-Type: application/json
+
+{
+  "id": 6,
+  "content": "test",
+  "date": "something",
+  "important": true
+}
+
+###
+GET http://localhost:8888/api/data
