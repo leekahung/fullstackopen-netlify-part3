@@ -1,13 +1,12 @@
 [build]
   command = "pnpm build"
   publish = "build"
-  functions = "build/netlify/functions-build"
+  functions = "netlify/functions/"
 
 [functions]
   node_bundler = "esbuild"
-  directory = "netlify/functions/"
 
 [[redirects]]
   from = "/api/*"
-  to = ".netlify/functions/:splat"
+  to = "/.netlify/functions/:splat"
   status = 200
