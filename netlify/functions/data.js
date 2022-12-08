@@ -80,5 +80,4 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint);
 
-module.exports = app;
 module.exports.handler = serverless(app);
