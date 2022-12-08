@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "/api/data";
+const baseUrl = "https://khl-note-app.netlify.app/api/data";
 
 const getAll = async () => {
   const request = axios.get(baseUrl);
