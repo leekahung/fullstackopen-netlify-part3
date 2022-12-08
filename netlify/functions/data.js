@@ -45,7 +45,7 @@ const middlewareLog = ":method :url :status :res[content-length] - ms :body";
 app.use(morgan(middlewareLog));
 
 app.get("/api/data", (request, response) => {
-  response.json(notes);
+  response.send(notes);
 });
 
 app.get("/api/data/:id", (request, response) => {
@@ -74,10 +74,10 @@ app.put("/api/data/:id", (request, response) => {
   response.json(updatedNote);
 });
 
-/* const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
 
-app.use(unknownEndpoint); */
+app.use(unknownEndpoint);
 
 module.exports.handler = serverless(app);
