@@ -18,8 +18,14 @@ const update = async (id, updatedObject) => {
   const request = axios.put(`${baseUrl}/${id}`, updatedObject);
   const response = await request;
   return response.data;
-}
+};
 
-const noteServices = { getAll, create, update };
+const remove = async (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`);
+  const response = await request;
+  return response.data;
+};
+
+const noteServices = { getAll, create, update, remove };
 
 export default noteServices;

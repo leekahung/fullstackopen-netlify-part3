@@ -57,11 +57,21 @@ const App = () => {
     });
   };
 
+  const handleDeleteNote = (id) => {
+    noteServices.remove(id).then(() => {
+      setNotes(notes.filter((n) => n.id !== id));
+    });
+  };
+
   return (
     <div className="App">
       <Header />
       <ShowNoteButton handleShowAll={handleShowAll} showAll={showAll} />
-      <Notes notes={notesToShow} toggleNoteImportance={toggleNoteImportance} />
+      <Notes
+        notes={notesToShow}
+        toggleNoteImportance={toggleNoteImportance}
+        handleDeleteNote={handleDeleteNote}
+      />
       <NotesForm
         handleAddNote={handleAddNote}
         newNote={newNote}
