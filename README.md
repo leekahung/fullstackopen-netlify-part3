@@ -1,6 +1,6 @@
-# fullstackopen-part3
+# fullstackopen-note-app
 
-Dedicated repo for part 3 of FullStackOpen tutorial pertaining to the note app.
+Dedicated repo pertaining to the Note App of FullStackOpen tutorial.
 
 The current build of the note app is hosted via Netlify using netlify serverless functions as a psuedo-backend with React acting as the front-end.
 
