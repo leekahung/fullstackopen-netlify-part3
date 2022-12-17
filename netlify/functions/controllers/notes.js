@@ -20,7 +20,7 @@ notesRouter.post("/", async (request, response) => {
 
   const note = new Note({
     content: body.content,
-    date: new Date(),
+    date: new Date().toISOString(),
     important: body.important,
   });
 

@@ -32,7 +32,7 @@ const App = () => {
     event.preventDefault();
     const noteObject = {
       content: newNote,
-      date: new Date(),
+      date: new Date().toISOString(),
       important: Boolean(noteImportance),
     };
 
