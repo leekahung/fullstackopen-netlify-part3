@@ -4,7 +4,7 @@ const morgan = require("morgan");
 morgan.token("body", (request) => JSON.stringify(request.body));
 const middlewareLogger = morgan(`
   Method: :method
-  Path - Status - Response Time: :url - :status - :response-time ms
+  Path - Status: :url - :status 
   Body: :body
 `);
 

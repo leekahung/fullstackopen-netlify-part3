@@ -1,11 +1,12 @@
 const express = require("express");
-const serverless = require("serverless-http");
+require("express-async-errors");
 const cors = require("cors");
 const notesRouter = require("./controllers/notes");
 const config = require("./utils/config");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
+const serverless = require("serverless-http");
 
 const app = express();
 app.use(cors());
@@ -23,9 +24,7 @@ mongoose
   });
 
 app.use(middleware.middlewareLogger);
-
 app.use("/api/data", notesRouter);
-
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 

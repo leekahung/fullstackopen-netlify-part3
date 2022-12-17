@@ -31,9 +31,8 @@ const App = () => {
   const handleAddNote = (event) => {
     event.preventDefault();
     const noteObject = {
-      id: notes.length + 1,
       content: newNote,
-      date: new Date().toISOString(),
+      date: new Date(),
       important: Boolean(noteImportance),
     };
 
