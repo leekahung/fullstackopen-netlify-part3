@@ -5,6 +5,7 @@ specifiers:
   '@testing-library/react': ^13.4.0
   '@testing-library/user-event': ^13.5.0
   axios: ^1.2.1
+  bcrypt: ^5.1.0
   cors: ^2.8.5
   express: ^4.18.2
   express-async-errors: ^3.1.1
@@ -24,6 +25,7 @@ dependencies:
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 13.5.0
   axios: 1.2.1
+  bcrypt: 5.1.0
   cors: 2.8.5
   express: 4.18.2
   express-async-errors: 3.1.1_express@4.18.2
@@ -5745,6 +5747,18 @@ packages:
 
   /batch/0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
+    dev: false
+
+  /bcrypt/5.1.0:
+    resolution: {integrity: sha512-RHBS7HI5N5tEnGTmtR/pppX0mmDSBpQ4aCBsj7CEQfYXDcO74A8sIBYcJMuCsis2E81zDxeENYhv66oZwLiA+Q==}
+    engines: {node: '>= 10.0.0'}
+    requiresBuild: true
+    dependencies:
+      '@mapbox/node-pre-gyp': 1.0.10
+      node-addon-api: 5.0.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
     dev: false
 
   /before-after-hook/2.2.3:
@@ -12961,6 +12975,10 @@ packages:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.4.1
+    dev: false
+
+  /node-addon-api/5.0.0:
+    resolution: {integrity: sha512-CvkDw2OEnme7ybCykJpVcKH+uAOLV2qLqiyla128dN9TkEWfrYmxG6C2boDe5KcNQqZF3orkqzGgOMvZ/JNekA==}
     dev: false
 
   /node-domexception/1.0.0:
