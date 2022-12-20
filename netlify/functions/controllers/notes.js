@@ -2,7 +2,10 @@ const notesRouter = require("express").Router();
 const Note = require("../models/note");
 
 notesRouter.get("/", async (_request, response) => {
-  const notes = await Note.find({});
+  const notes = await Note.find({}).populate("user", {
+    username: 1,
+    name: 1,
+  });
   response.json(notes);
 });
 
@@ -30,9 +33,11 @@ notesRouter.post("/", async (request, response) => {
 
 notesRouter.put("/:id", async (request, response) => {
   const body = request.body;
-  const updatedNote = await Note.findByIdAndUpdate(request.params.id, body, {
-    new: true,
-  });
+  const updatedNote = await Note.findByIdAndUpdate(
+    request.params.id,
+    { important: body.important },
+    { new: true }
+  );
   response.json(updatedNote);
 });
 
