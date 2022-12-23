@@ -5,12 +5,18 @@ import Notes from "./components/Notes";
 import ShowNoteButton from "./components/ShowNoteButton";
 import NotesForm from "./components/NotesForm";
 import Footer from "./components/Footer";
+import loginService from "./services/login";
+import Login from "./components/Login";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
   const [newNote, setNewNote] = useState("");
   const [noteImportance, setNoteImportance] = useState(false);
+  const [notification, setNotification] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     noteServices.getAll().then((returnedNotes) => {
@@ -28,19 +34,26 @@ const App = () => {
     setNewNote(event.target.value);
   };
 
-  const handleAddNote = (event) => {
+  const handleAddNote = async (event) => {
     event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Boolean(noteImportance),
-    };
+    try {
+      const noteObject = {
+        content: newNote,
+        date: new Date().toISOString(),
+        important: Boolean(noteImportance),
+      };
 
-    noteServices.create(noteObject).then((newNoteObject) => {
-      setNotes(notes.concat(newNoteObject));
-      setNewNote("");
-      setNoteImportance(false);
-    });
+      noteServices.create(noteObject).then((newNoteObject) => {
+        setNotes(notes.concat(newNoteObject));
+        setNewNote("");
+        setNoteImportance(false);
+      });
+    } catch (exception) {
+      setNotification("Only users can save posts to app");
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    }
   };
 
   const handleNoteImportance = (event) => {
@@ -62,21 +75,64 @@ const App = () => {
     });
   };
 
+  const handleUsername = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      noteServices.setToken(user.token);
+      setUser(user);
+      setUsername("");
+      setPassword("");
+      setNotification(`${user.name} logged in`);
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    } catch (exception) {
+      setNotification("Wrong credentials");
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    }
+  };
+
   return (
     <div className="App">
       <Header />
+      <div>{notification}</div>
+      {user === null ? (
+        <Login
+          handleLogin={handleLogin}
+          username={username}
+          handleUsername={handleUsername}
+          password={password}
+          handlePassword={handlePassword}
+        />
+      ) : (
+        <NotesForm
+          handleAddNote={handleAddNote}
+          newNote={newNote}
+          handleNewNote={handleNewNote}
+          noteImportance={noteImportance}
+          handleNoteImportance={handleNoteImportance}
+        />
+      )}
       <ShowNoteButton handleShowAll={handleShowAll} showAll={showAll} />
       <Notes
         notes={notesToShow}
         toggleNoteImportance={toggleNoteImportance}
         handleDeleteNote={handleDeleteNote}
-      />
-      <NotesForm
-        handleAddNote={handleAddNote}
-        newNote={newNote}
-        handleNewNote={handleNewNote}
-        noteImportance={noteImportance}
-        handleNoteImportance={handleNoteImportance}
       />
       <Footer />
     </div>
