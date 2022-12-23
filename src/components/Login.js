@@ -5,16 +5,20 @@ const Login = ({
   password,
   handlePassword,
 }) => {
+  const loginStyle = {
+    margin: "10px 0",
+  };
+
+  const loginFormStyle = {
+    margin: "10px 0",
+  };
+
   return (
-    <div>
-      <form onSubmit={handleLogin}>
+    <div style={loginStyle}>
+      <form style={loginFormStyle} onSubmit={handleLogin}>
         <div>
           <label>username</label>
-          <input
-            value={username}
-            name="Username"
-            onChange={handleUsername}
-          />
+          <input value={username} name="Username" onChange={handleUsername} />
         </div>
         <div>
           <label>password</label>
@@ -25,6 +29,7 @@ const Login = ({
             onChange={handlePassword}
           />
         </div>
+        <br />
         <button>login</button>
       </form>
     </div>
