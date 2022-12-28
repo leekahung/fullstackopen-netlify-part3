@@ -1,11 +1,30 @@
-const NotesForm = ({
-  handleAddNote,
-  newNote,
-  handleNewNote,
-  noteImportance,
-  handleNoteImportance,
-  setNotification,
-}) => {
+import { useState } from "react";
+
+const NotesForm = ({ handleAddNote }) => {
+  const [newNote, setNewNote] = useState("");
+  const [noteImportance, setNoteImportance] = useState(false);
+
+  const handleNewNote = (event) => {
+    setNewNote(event.target.value);
+  };
+
+  const handleNoteImportance = (event) => {
+    setNoteImportance(event.target.value);
+  };
+
+  const submitNote = async (event) => {
+    event.preventDefault();
+    const noteObject = {
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Boolean(noteImportance),
+    };
+
+    handleAddNote(noteObject);
+    setNewNote("");
+    setNoteImportance(false);
+  };
+
   const noteStyle = {
     margin: "10px 0",
   };
@@ -16,7 +35,8 @@ const NotesForm = ({
 
   return (
     <div style={noteStyle}>
-      <form style={formStyle} onSubmit={handleAddNote}>
+      <h2>Create a new note</h2>
+      <form style={formStyle} onSubmit={submitNote}>
         <input value={newNote} onChange={handleNewNote} />{" "}
         <label>Important?</label>
         <input

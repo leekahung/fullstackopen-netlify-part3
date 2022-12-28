@@ -13,11 +13,7 @@ import Logout from "./components/Logout";
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
-  const [newNote, setNewNote] = useState("");
-  const [noteImportance, setNoteImportance] = useState(false);
   const [notification, setNotification] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -41,62 +37,49 @@ const App = () => {
     setShowAll(!showAll);
   };
 
-  const handleNewNote = (event) => {
-    setNewNote(event.target.value);
+  const setNotificationMessage = (message) => {
+    setNotification(message);
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
   };
 
-  const handleAddNote = async (event) => {
-    event.preventDefault();
-    try {
-      const noteObject = {
-        content: newNote,
-        date: new Date().toISOString(),
-        important: Boolean(noteImportance),
-      };
-
-      noteServices.create(noteObject).then((newNoteObject) => {
-        setNotes(notes.concat(newNoteObject));
-        setNewNote("");
-        setNoteImportance(false);
-      });
-    } catch (exception) {
-      setNotification("Only users can save posts to app");
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
-    }
-  };
-
-  const handleNoteImportance = (event) => {
-    setNoteImportance(event.target.value);
-  };
-
-  const toggleNoteImportance = (id) => {
+  const toggleNoteImportance = async (id) => {
     const note = notes.find((n) => n.id === id);
     const updateNote = { ...note, important: !note.important };
 
-    noteServices.update(id, updateNote).then((updatedNote) => {
+    try {
+      const updatedNote = await noteServices.update(id, updateNote);
       setNotes(notes.map((n) => (n.id !== id ? n : updatedNote)));
-    });
+      setNotificationMessage("Note updated");
+    } catch (exception) {
+      setNotificationMessage("Note cannot be updated");
+    }
   };
 
-  const handleDeleteNote = (id) => {
-    noteServices.remove(id).then(() => {
+  const handleAddNote = async (noteObject) => {
+    try {
+      const savedNote = await noteServices.create(noteObject);
+      setNotes(notes.concat(savedNote));
+      setNotificationMessage("New note added");
+    } catch (exception) {
+      setNotificationMessage(
+        "Note content missing or shorter than 5 characters long"
+      );
+    }
+  };
+
+  const handleDeleteNote = async (id) => {
+    try {
+      await noteServices.remove(id);
       setNotes(notes.filter((n) => n.id !== id));
-    });
+      setNotificationMessage("Note deleted");
+    } catch (exception) {
+      setNotificationMessage("Note cannot be deleted");
+    }
   };
 
-  const handleUsername = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
+  const handleLogin = async (username, password) => {
     try {
       const user = await loginService.login({
         username,
@@ -106,17 +89,9 @@ const App = () => {
 
       noteServices.setToken(user.token);
       setUser(user);
-      setUsername("");
-      setPassword("");
-      setNotification(`${user.name} logged in`);
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      setNotificationMessage(`${user.name} logged in`);
     } catch (exception) {
-      setNotification("Wrong credentials");
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      setNotificationMessage("Wrong credentials");
     }
   };
 
@@ -126,25 +101,12 @@ const App = () => {
       <div>{notification}</div>
       {user === null ? (
         <Toggable buttonLabel="login">
-          <Login
-            handleLogin={handleLogin}
-            username={username}
-            handleUsername={handleUsername}
-            password={password}
-            handlePassword={handlePassword}
-          />
+          <Login handleLogin={handleLogin} />
         </Toggable>
       ) : (
         <>
           <Toggable buttonLabel="new note">
-            <NotesForm
-              handleAddNote={handleAddNote}
-              newNote={newNote}
-              handleNewNote={handleNewNote}
-              noteImportance={noteImportance}
-              handleNoteImportance={handleNoteImportance}
-              setNotification={setNotification}
-            />
+            <NotesForm handleAddNote={handleAddNote} />
           </Toggable>
           <Logout setNotification={setNotification} />
         </>
