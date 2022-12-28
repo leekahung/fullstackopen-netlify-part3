@@ -7,6 +7,8 @@ import NotesForm from "./components/NotesForm";
 import Footer from "./components/Footer";
 import loginService from "./services/login";
 import Login from "./components/Login";
+import Toggable from "./components/Toggable";
+import Logout from "./components/Logout";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -123,22 +125,29 @@ const App = () => {
       <Header />
       <div>{notification}</div>
       {user === null ? (
-        <Login
-          handleLogin={handleLogin}
-          username={username}
-          handleUsername={handleUsername}
-          password={password}
-          handlePassword={handlePassword}
-        />
+        <Toggable buttonLabel="login">
+          <Login
+            handleLogin={handleLogin}
+            username={username}
+            handleUsername={handleUsername}
+            password={password}
+            handlePassword={handlePassword}
+          />
+        </Toggable>
       ) : (
-        <NotesForm
-          handleAddNote={handleAddNote}
-          newNote={newNote}
-          handleNewNote={handleNewNote}
-          noteImportance={noteImportance}
-          handleNoteImportance={handleNoteImportance}
-          setNotification={setNotification}
-        />
+        <>
+          <Toggable buttonLabel="new note">
+            <NotesForm
+              handleAddNote={handleAddNote}
+              newNote={newNote}
+              handleNewNote={handleNewNote}
+              noteImportance={noteImportance}
+              handleNoteImportance={handleNoteImportance}
+              setNotification={setNotification}
+            />
+          </Toggable>
+          <Logout setNotification={setNotification} />
+        </>
       )}
       <ShowNoteButton handleShowAll={handleShowAll} showAll={showAll} />
       <Notes

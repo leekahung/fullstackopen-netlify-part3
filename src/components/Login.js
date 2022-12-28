@@ -4,6 +4,7 @@ const Login = ({
   handleUsername,
   password,
   handlePassword,
+  toggleLogin,
 }) => {
   const loginStyle = {
     margin: "10px 0",
