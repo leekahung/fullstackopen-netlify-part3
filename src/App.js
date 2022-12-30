@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import noteServices from "./services/notes";
 import Header from "./components/Header";
-import Notes from "./components/Notes";
 import ShowNoteButton from "./components/ShowNoteButton";
 import NotesForm from "./components/NotesForm";
 import Footer from "./components/Footer";
@@ -9,6 +8,7 @@ import loginService from "./services/login";
 import Login from "./components/Login";
 import Toggable from "./components/Toggable";
 import Logout from "./components/Logout";
+import Note from "./components/Note";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -115,11 +115,16 @@ const App = () => {
         </>
       )}
       <ShowNoteButton handleShowAll={handleShowAll} showAll={showAll} />
-      <Notes
-        notes={notesToShow}
-        toggleNoteImportance={toggleNoteImportance}
-        handleDeleteNote={handleDeleteNote}
-      />
+      <ul>
+        {notesToShow.map((note) => (
+          <Note
+            key={note.id}
+            note={note}
+            toggleNoteImportance={() => toggleNoteImportance(note.id)}
+            handleDeleteNote={() => handleDeleteNote(note.id)}
+          />
+        ))}
+      </ul>
       <Footer />
     </div>
   );
