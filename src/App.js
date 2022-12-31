@@ -6,7 +6,7 @@ import NotesForm from "./components/NotesForm";
 import Footer from "./components/Footer";
 import loginService from "./services/login";
 import Login from "./components/Login";
-import Toggable from "./components/Toggable";
+import Toggable from "./components/Togglable";
 import Logout from "./components/Logout";
 import Note from "./components/Note";
 

@@ -37,7 +37,11 @@ const NotesForm = ({ handleAddNote }) => {
     <div style={noteStyle}>
       <h2>Create a new note</h2>
       <form style={formStyle} onSubmit={submitNote}>
-        <input value={newNote} onChange={handleNewNote} />{" "}
+        <input
+          value={newNote}
+          onChange={handleNewNote}
+          placeholder="write note content here"
+        />{" "}
         <label>Important?</label>
         <input
           type="checkbox"
