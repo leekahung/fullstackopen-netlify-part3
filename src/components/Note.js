@@ -8,8 +8,9 @@ const Note = ({ note, toggleNoteImportance, handleDeleteNote }) => {
 
   return (
     <li style={listStyle} className="note">
-      {note.content} <button onClick={toggleNoteImportance}>{label}</button>
-      <button onClick={handleDeleteNote}>delete</button>
+      <span>{note.content}</span>{" "}
+      <button className="toggle-importance" onClick={toggleNoteImportance}>{label}</button>
+      <button className="delete-note" onClick={handleDeleteNote}>delete</button>
     </li>
   );
 };

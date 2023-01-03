@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Toggable from "./components/Togglable";
 import Logout from "./components/Logout";
 import Note from "./components/Note";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -103,7 +104,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <div>{notification}</div>
+      <Notification notification={notification}/>
       <div>{loggedUser}</div>
       {user === null ? (
         <Toggable buttonLabel="login">
