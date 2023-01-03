@@ -14,6 +14,7 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
   const [notification, setNotification] = useState("");
+  const [loggedUser, setLoggedUser] = useState("");
   const [user, setUser] = useState(null);
   const noteFormRef = useRef();
 
@@ -93,6 +94,7 @@ const App = () => {
       noteServices.setToken(user.token);
       setUser(user);
       setNotificationMessage(`${user.name} logged in`);
+      setLoggedUser(`User: ${user.name}`);
     } catch (exception) {
       setNotificationMessage("Wrong credentials");
     }
@@ -102,6 +104,7 @@ const App = () => {
     <div className="App">
       <Header />
       <div>{notification}</div>
+      <div>{loggedUser}</div>
       {user === null ? (
         <Toggable buttonLabel="login">
           <Login handleLogin={handleLogin} />
@@ -111,7 +114,10 @@ const App = () => {
           <Toggable buttonLabel="new note" ref={noteFormRef}>
             <NotesForm handleAddNote={handleAddNote} />
           </Toggable>
-          <Logout setNotification={setNotification} />
+          <Logout
+            setNotification={setNotification}
+            setLoggedUser={setLoggedUser}
+          />
         </>
       )}
       <ShowNoteButton handleShowAll={handleShowAll} showAll={showAll} />
