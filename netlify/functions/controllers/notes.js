@@ -72,11 +72,21 @@ notesRouter.delete("/:id", userExtractor, async (request, response) => {
   const user = request.user;
   const noteToDelete = await Note.findById(request.params.id);
   if (user.username === "root") {
-    await Note.findByIdAndRemove(request.params.id);
+    await Note.findByIdAndDelete(request.params.id);
+    user.notes = user.notes.filter(
+      (nid) => nid.toString() !== request.params.id
+    );
+    await user.save();
+
     response.status(204).end();
   } else {
     if (user._id.toString() === noteToDelete.user.toString()) {
-      await Note.findByIdAndRemove(request.params.id);
+      await Note.findByIdAndDelete(request.params.id);
+      user.notes = user.notes.filter(
+        (nid) => nid.toString() !== request.params.id
+      );
+      await user.save();
+
       response.status(204).end();
     } else {
       response.status(401).json({
