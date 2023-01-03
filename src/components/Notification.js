@@ -20,7 +20,7 @@ const Notification = ({ notification }) => {
   };
 
   let notificationStyle = notification
-    ? notification.includes("Wrong credentials")
+    ? (notification.includes("Error:"))
       ? { ...notificationStyles.general, ...notificationStyles.error }
       : { ...notificationStyles.general, ...notificationStyles.message }
     : notificationStyles.none;

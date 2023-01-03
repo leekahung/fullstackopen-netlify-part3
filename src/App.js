@@ -56,7 +56,7 @@ const App = () => {
       setNotes(notes.map((n) => (n.id !== id ? n : updatedNote)));
       setNotificationMessage("Note updated");
     } catch (exception) {
-      setNotificationMessage("Note cannot be updated");
+      setNotificationMessage("Error: Note cannot be updated");
     }
   };
 
@@ -69,7 +69,7 @@ const App = () => {
       setNotificationMessage("New note added");
     } catch (exception) {
       setNotificationMessage(
-        "Note content missing or shorter than 5 characters long"
+        "Error: Note content missing or shorter than 5 characters long"
       );
     }
   };
@@ -80,7 +80,7 @@ const App = () => {
       setNotes(notes.filter((n) => n.id !== id));
       setNotificationMessage("Note deleted");
     } catch (exception) {
-      setNotificationMessage("Note cannot be deleted");
+      setNotificationMessage("Error: Note cannot be deleted");
     }
   };
 
@@ -97,7 +97,7 @@ const App = () => {
       setNotificationMessage(`${user.name} logged in`);
       setLoggedUser(`User: ${user.name}`);
     } catch (exception) {
-      setNotificationMessage("Wrong credentials");
+      setNotificationMessage("Error: Wrong credentials");
     }
   };
 
